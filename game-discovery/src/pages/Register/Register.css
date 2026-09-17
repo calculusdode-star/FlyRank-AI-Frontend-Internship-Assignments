@@ -1,0 +1,109 @@
+.register {
+  width: min(100% - 2.5rem, 560px);
+  margin: 0 auto;
+  padding: 4rem 0 5rem;
+}
+
+.register__panel {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid #293658;
+  border-radius: 16px;
+  background: #11182c;
+}
+
+.register__header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.register__title {
+  margin: 0 0 0.75rem;
+  color: #fff;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  letter-spacing: -0.04em;
+}
+
+.register__subtitle {
+  margin: 0;
+  color: #b9c4d8;
+  line-height: 1.6;
+}
+
+.register__form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.register__field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.register__field label {
+  color: #e8edf5;
+  font-weight: 600;
+}
+
+.register__field input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #344363;
+  border-radius: 6px;
+  background: #0d1426;
+  color: #f6f8fc;
+  font: inherit;
+}
+
+.register__field input:focus {
+  border-color: #8b5cf6;
+  outline: 2px solid rgba(139, 92, 246, 0.2);
+}
+
+.register__message {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.register__message--error {
+  color: #fb7185;
+}
+
+.register__message--success {
+  color: #86efac;
+}
+
+.register__submit {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #8b5cf6;
+  border-radius: 6px;
+  background: #7c3aed;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.register__submit:hover:not(:disabled) {
+  border-color: #a78bfa;
+  background: #6d28d9;
+}
+
+.register__submit:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 3px;
+}
+
+.register__submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+@media (max-width: 600px) {
+  .register {
+    width: min(100% - 1.5rem, 560px);
+    padding-top: 2rem;
+  }
+}

@@ -1,0 +1,238 @@
+Baseline:
+Game Discovery had RAWG browsing, Firebase authentication, favourites, and
+responsive game listing. The entries below record the requested changes.
+
+CHANGE 001 — Pagination spacing and alignment
+
+Date:
+2026-09-17
+
+Requirement:
+Add spacing above pagination and center it without changing pagination logic.
+
+Files:
+- `src/pages/Home/HomeView.jsx`
+- `src/pages/Home/Home.css`
+
+Previous state code:
+
+```jsx
+{hasMore && (
+  <button
+    type="button"
+    className="home-view__category-button"
+    onClick={loadMoreGames}
+    disabled={loadingMore || loading}
+  >
+    {loadingMore ? 'Loading more games...' : 'Load More'}
+  </button>
+)}
+```
+
+Current state code:
+
+```jsx
+{hasMore && (
+  <div className="home-view__pagination">
+    <button
+      type="button"
+      className="home-view__category-button"
+      onClick={loadMoreGames}
+      disabled={loadingMore || loading}
+    >
+      {loadingMore ? 'Loading more games...' : 'Load More'}
+    </button>
+  </div>
+)}
+```
+
+Comparison/code change:
+Added the `home-view__pagination` wrapper and CSS with centered flex layout,
+2rem top spacing, 0.5rem horizontal padding, and 1.5rem top spacing below
+700px. Button behavior and pagination logic stayed unchanged.
+
+Verification:
+Tests, lint, and build passed. Browser visual inspection was not performed.
+Result: PARTIAL.
+
+CHANGE 002 — Redirect after successful registration
+
+Date:
+2026-09-17
+
+Requirement:
+Redirect a newly registered authenticated user to Home.
+
+Files:
+- `src/pages/Register/RegisterView.jsx`
+
+Previous state code:
+
+```jsx
+import { useState } from 'react'
+```
+
+```jsx
+try {
+  await registerUser(email.trim(), password)
+  setSuccessMessage('Your account has been created successfully.')
+  setFormValues({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+} catch (error) {
+  setAuthenticationError(getRegistrationErrorMessage(error))
+}
+```
+
+Current state code:
+
+```jsx
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+```
+
+```jsx
+try {
+  await registerUser(email.trim(), password)
+  navigate('/', { replace: true })
+} catch (error) {
+  setAuthenticationError(getRegistrationErrorMessage(error))
+}
+```
+
+Comparison/code change:
+Added `useNavigate`, initialized it in `RegisterView`, and replaced the
+success message/form reset with navigation to `/`. Failed registration still
+uses the existing `catch` path.
+
+Verification:
+Tests, lint, and build passed. Live Firebase registration was not performed.
+Result: PARTIAL.
+
+CHANGE 003 — Redirect after successful login
+
+Date:
+2026-09-17
+
+Requirement:
+Redirect a successfully authenticated user to Home.
+
+Files:
+- `src/pages/Login/LoginView.jsx`
+
+Previous state code:
+
+```jsx
+import { useState } from 'react'
+```
+
+```jsx
+try {
+  await loginUser(email.trim(), password)
+  setSuccessMessage('You have logged in successfully.')
+  setFormValues({ email: '', password: '' })
+} catch (error) {
+  setAuthenticationError(getLoginErrorMessage(error))
+}
+```
+
+Current state code:
+
+```jsx
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+```
+
+```jsx
+try {
+  await loginUser(email.trim(), password)
+  navigate('/', { replace: true })
+} catch (error) {
+  setAuthenticationError(getLoginErrorMessage(error))
+}
+```
+
+Comparison/code change:
+Added `useNavigate`, initialized it in `LoginView`, and replaced the success
+message/form reset with navigation to `/`. Failed login still uses the
+existing `catch` path.
+
+Verification:
+Tests, lint, and build passed. Live Firebase login was not performed.
+Result: PARTIAL.
+
+CHANGE 004 — Correct login and registration redirects
+
+Date:
+2026-09-17
+
+Requirement:
+Make login and registration redirect reliably after Firebase authentication
+and preserve the authenticated state on Home.
+
+Files:
+- `src/pages/Login/LoginView.jsx`
+- `src/pages/Register/RegisterView.jsx`
+
+Previous state code:
+
+```jsx
+try {
+  await loginUser(email.trim(), password)
+} catch (error) {
+  setAuthenticationError(getLoginErrorMessage(error))
+}
+```
+
+```jsx
+try {
+  await registerUser(email.trim(), password)
+} catch (error) {
+  setAuthenticationError(getRegistrationErrorMessage(error))
+}
+```
+
+Previous state also navigated from the submit handlers before the
+`AuthContext` update was necessarily reflected in React.
+
+Current state code:
+
+```jsx
+useEffect(() => {
+  if (!authLoading && user) {
+    navigate('/', { replace: true })
+  }
+}, [authLoading, navigate, user])
+```
+
+```jsx
+try {
+  await loginUser(email.trim(), password)
+  navigate('/', { replace: true })
+} catch (error) {
+  setAuthenticationError(getLoginErrorMessage(error))
+}
+```
+
+The registration handler uses the same pattern with `registerUser(...)`.
+
+Comparison/code change:
+Added `user` and `authLoading` from `AuthContext`, retained the auth-state
+effect as a synchronization fallback, and added immediate navigation after
+successful login or registration. Failed authentication skips navigation and
+remains on the relevant form.
+
+Result:
+Firebase authentication completes, the user is navigated to `/`, and Home and
+Header can receive the authenticated state from `AuthContext`.
+
+Verification:
+Tests: 56/56 passed. Lint passed. Build passed. Live Firebase flows were not
+performed.
+Result: PARTIAL.
+
+Remaining issues:
+Live login, registration, and failed-authentication flows still require
+verification with a Firebase test account.

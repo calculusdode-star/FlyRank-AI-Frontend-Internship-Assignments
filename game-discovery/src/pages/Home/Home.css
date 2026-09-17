@@ -1,0 +1,161 @@
+.home-view {
+  width: min(100% - 2.5rem, 1200px);
+  margin: 0 auto;
+  padding: 3.5rem 0 5rem;
+}
+
+.home-view__hero {
+  margin-bottom: 2.5rem;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4.5rem);
+  border: 1px solid #293658;
+  border-radius: 16px;
+  background: #11182c;
+  text-align: center;
+}
+
+.home-view__title {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.home-view__subtitle {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #b9c4d8;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.6;
+}
+
+.home-view__status {
+  min-height: 3.25rem;
+  margin-bottom: 2.5rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid #25314d;
+  border-radius: 10px;
+  background: #11182c;
+  text-align: center;
+}
+
+.home-view__status-text {
+  margin: 0;
+  color: #aebbd2;
+  font-size: 0.95rem;
+}
+
+.home-view__status-text--error,
+.home-view__empty-state--error {
+  color: #fb7185;
+}
+
+.home-view__section-title {
+  margin: 0;
+  color: #f6f8fc;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  letter-spacing: -0.025em;
+}
+
+.home-view__categories {
+  margin-bottom: 3rem;
+}
+
+.home-view__category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.home-view__category-button {
+  min-height: 2.75rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid #344363;
+  border-radius: 20px;
+  background: #151e35;
+  color: #e8edf5;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.home-view__category-button:hover:not(:disabled) {
+  border-color: #8b5cf6;
+  background: #211a43;
+  color: #fff;
+}
+
+.home-view__category-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.home-view__featured,
+.home-view__all-games {
+  margin-top: 3.5rem;
+}
+
+.home-view__game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.home-view__empty-state {
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  color: #aebbd2;
+  text-align: center;
+}
+
+.home-view__pagination {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+  padding-inline: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .home-view {
+    width: min(100% - 1.5rem, 1200px);
+    padding-top: 2rem;
+  }
+
+  .home-view__hero {
+    margin-bottom: 1.5rem;
+  }
+
+  .home-view__featured,
+  .home-view__all-games {
+    margin-top: 2.5rem;
+  }
+
+  .home-view__pagination {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-view {
+    width: min(100% - 1rem, 1200px);
+    padding-bottom: 3rem;
+  }
+
+  .home-view__game-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .home-view__category-list {
+    gap: 0.4rem;
+  }
+
+  .home-view__category-button {
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+  }
+}

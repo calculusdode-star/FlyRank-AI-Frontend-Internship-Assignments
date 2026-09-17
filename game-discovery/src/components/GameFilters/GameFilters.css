@@ -1,0 +1,69 @@
+.game-filters {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #25314d;
+  border-radius: 12px;
+  background: #11182c;
+}
+
+.game-filters__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.game-filters__header h2 {
+  margin: 0;
+  color: #f6f8fc;
+  font-size: 1.1rem;
+}
+
+.game-filters__header p {
+  margin: 0;
+  color: #aebbd2;
+  font-size: 0.9rem;
+}
+
+.game-filters__controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.game-filters__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.game-filters__field label {
+  color: #b9c4d8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.game-filters__field select {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #344363;
+  border-radius: 8px;
+  background: #151e35;
+  color: #f6f8fc;
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .game-filters__header {
+    display: block;
+  }
+
+  .game-filters__header p {
+    margin-top: 0.35rem;
+  }
+
+  .game-filters__controls {
+    grid-template-columns: 1fr;
+  }
+}

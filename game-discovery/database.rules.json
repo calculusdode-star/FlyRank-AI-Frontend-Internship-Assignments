@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "favourites": {
+      "$userId": {
+        ".read": "auth != null && auth.uid === $userId",
+        ".write": "auth != null && auth.uid === $userId",
+        "$gameId": {
+          ".validate": "newData.hasChildren(['id', 'name', 'background_image']) && newData.child('id').val() == $gameId && newData.child('name').isString() && newData.child('background_image').isString()"
+        }
+      }
+    }
+  }
+}
