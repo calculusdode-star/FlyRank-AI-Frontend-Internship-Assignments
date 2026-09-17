@@ -236,3 +236,54 @@ Result: PARTIAL.
 Remaining issues:
 Live login, registration, and failed-authentication flows still require
 verification with a Firebase test account.
+
+CHANGE 005 — Prepare project for GitHub and push safe application state
+
+Date:
+2026-09-17
+
+Requirement:
+Prepare the project for GitHub and push the current safe application state to the correct GitHub repository. Do NOT deploy to Render yet.
+
+Previous application state:
+All source files, config, and .gitignore present in the game-discovery directory, but not yet committed to Git. The .env file containing RAWG_API_KEY and Firebase VITE_* variables exists but is ignored by .gitignore. No commits exist on the main branch.
+
+Problem/reason:
+Need to push the safe application state to GitHub for the assignment while preserving security (no secrets committed) and keeping Render deployment pending.
+
+Implementation:
+- Verified git status, branch, remotes, .gitignore coverage.
+- Confirmed no secrets in staged files; .env ignored.
+- Staged all non-ignored project files via `git add game-discovery`.
+- Created Conventional Commit describing the changes.
+- Pushed commit to origin main after rebasing onto remote LICENSE commit.
+
+Files affected:
+- `docs/CHANGELOG_ASSIGNMENT.txt` (new entry)
+- Git commit and push (metadata)
+- `.gitignore` already appropriate
+
+Application state after change:
+- Working tree clean on local main branch.
+- Latest commit exists locally and on remote origin main.
+- Changelog updated with entry 005.
+- No secrets committed; .env and other ignored files excluded.
+
+Impact:
+- Project now tracked on GitHub, ready for future Render deployment.
+- No exposure of RAWG API key or Firebase credentials.
+- Deployment to Render postponed as requested.
+
+Verification/tests:
+- `git status` shows clean working tree.
+- `git log -1 --oneline` shows new commit.
+- `git rev-parse HEAD` matches remote tracking.
+- Changelog entry present and correctly formatted.
+
+Result:
+- Successfully pushed the safe project state to GitHub without deploying to Render.
+
+Remaining limitations:
+- Render deployment not configured yet.
+- No GitHub Pages configured.
+- .env and secrets remain on developer machine, not in repository.
